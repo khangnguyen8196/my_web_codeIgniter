@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class BrandController extends CI_Controller {
+class CategoryController extends CI_Controller {
     public function __construct(){
         parent::__construct();
         if(!$this->session->userdata('LoggedIn')){
@@ -14,17 +14,17 @@ class BrandController extends CI_Controller {
 		$this->load->view('admin/layout/header');
         $this->load->view('admin/layout/navbar');
 
-        $this->load->model('BrandModel');
-        $data['brand']=$this->BrandModel->selectBrand();
+        $this->load->model('CategoryModel');
+        $data['category']=$this->CategoryModel->selectCategory();
 
-        $this->load->view('admin/brand/list',$data);
+        $this->load->view('admin/category/list',$data);
         $this->load->view('admin/layout/footer');
 	}
     public function create()
 	{
 		$this->load->view('admin/layout/header');
         $this->load->view('admin/layout/navbar');
-        $this->load->view('admin/brand/create');
+        $this->load->view('admin/category/create');
         $this->load->view('admin/layout/footer');
 	}
     public function store()
@@ -38,7 +38,7 @@ class BrandController extends CI_Controller {
             $ori_filename =$_FILES['image']['name'];
             $new_name = time()."".str_replace(' ','-',$ori_filename);
             $config =[
-                'upload_path' => './uploads/brand',
+                'upload_path' => './uploads/category',
                 'allowed_types' => 'gif|jpg|png|jpeg',
                 'file_name' => $new_name,
             ];
@@ -49,26 +49,26 @@ class BrandController extends CI_Controller {
                         $error = array('error' => $this->upload->display_errors());
                         $this->load->view('admin/layout/header');
                         $this->load->view('admin/layout/navbar');
-                        $this->load->view('admin/brand/create',$error);
+                        $this->load->view('admin/category/create',$error);
                         $this->load->view('admin/layout/footer');
                 }
                 else
                 {
-                        $brand_filename= $this->upload->data('file_name');
+                        $category_filename= $this->upload->data('file_name');
                         $data=[
                             'title'=> $this->input->post('title'),
                             'description'=> $this->input->post('description'),
                             'slug'=> $this->input->post('slug'),
-                            'image'=> $brand_filename,
+                            'image'=> $category_filename,
                             'status'=> $this->input->post('status')
                         ];
-                        $this->load->model('BrandModel');
-                        $this->BrandModel->insertBrand($data);
-                        $this->session->set_flashdata('success','Add Success Brand');
-                        redirect(base_url('brand/list')); 
+                        $this->load->model('CategoryModel');
+                        $this->CategoryModel->insertCategory($data);
+                        $this->session->set_flashdata('success','Add Success category');
+                        redirect(base_url('category/list')); 
                 }
         }else{
-            $this->session->set_flashdata('error','Add faild Brand');
+            $this->session->set_flashdata('error','Add faild category');
             $this->create();
         }
         
@@ -78,10 +78,10 @@ class BrandController extends CI_Controller {
 		$this->load->view('admin/layout/header');
         $this->load->view('admin/layout/navbar');
 
-        $this->load->model('BrandModel');
-        $data['brand']=$this->BrandModel->selectBrandById($id);
+        $this->load->model('CategoryModel');
+        $data['category']=$this->CategoryModel->selectCategoryById($id);
 
-        $this->load->view('admin/brand/edit',$data);
+        $this->load->view('admin/category/edit',$data);
         $this->load->view('admin/layout/footer');
 	}
 
@@ -93,15 +93,16 @@ class BrandController extends CI_Controller {
         if ($this->form_validation->run()==TRUE)
         {   
             if(!empty($_FILES['image']['name'])){
+                // xoá ảnh củ
                 if ($this->input->post('delete_image')) {
-                    unlink('./uploads/brand/'.$this->input->post('old_image'));
+                    unlink('./uploads/category/'.$this->input->post('old_image'));
                     $data['image'] = '';
                 }
                 // upload image
                 $ori_filename =$_FILES['image']['name'];
                 $new_name = time()."".str_replace(' ','-',$ori_filename);
                 $config =[
-                    'upload_path' => './uploads/brand',
+                    'upload_path' => './uploads/category',
                     'allowed_types' => 'gif|jpg|png|jpeg',
                     'file_name' => $new_name,
                 ];
@@ -112,17 +113,17 @@ class BrandController extends CI_Controller {
                     $error = array('error' => $this->upload->display_errors());
                     $this->load->view('admin/layout/header');
                     $this->load->view('admin/layout/navbar');
-                    $this->load->view('admin/brand/create',$error);
+                    $this->load->view('admin/category/create',$error);
                     $this->load->view('admin/layout/footer');
                 }
                 else
                 {
-                    $brand_filename= $this->upload->data('file_name');
+                    $category_filename= $this->upload->data('file_name');
                     $data=[
                         'title'=> $this->input->post('title'),
                         'description'=> $this->input->post('description'),
                         'slug'=> $this->input->post('slug'),
-                        'image'=> $brand_filename,
+                        'image'=> $category_filename,
                         'status'=> $this->input->post('status')
                     ];        
                     
@@ -135,21 +136,21 @@ class BrandController extends CI_Controller {
                     'status'=> $this->input->post('status')
                 ];
             }
-            $this->load->model('BrandModel');
-            $this->BrandModel->updateBrand($id,$data);
-            $this->session->set_flashdata('success','Update Success Brand');
-            redirect(base_url('brand/list')); 
+            $this->load->model('CategoryModel');
+            $this->CategoryModel->updateCategory($id,$data);
+            $this->session->set_flashdata('success','Update Success category');
+            redirect(base_url('category/list')); 
         }else{
-            $this->session->set_flashdata('error','Update faild Brand');
+            $this->session->set_flashdata('error','Update faild category');
             $this->edit($id);
         }
     } 
 
     public function delete($id)
     {
-        $this->load->model('BrandModel');
-        $this->BrandModel->deleteBrand($id);
-        $this->session->set_flashdata('success','Delete Success Brand');
-        redirect(base_url('brand/list')); 
+        $this->load->model('CategoryModel');
+        $this->CategoryModel->deleteCategory($id);
+        $this->session->set_flashdata('success','Delete Success category');
+        redirect(base_url('category/list')); 
     }
 }

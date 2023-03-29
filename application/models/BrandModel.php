@@ -22,9 +22,23 @@ class BrandModel extends CI_Model
         return $this->db->update('brands',$data,['id'=>$id]);
     }
 
+    // public function deleteBrand($id)
+    // {
+    //     return $this->db->delete('brands',['id'=>$id]);
+    // }
+
     public function deleteBrand($id)
     {
-        return $this->db->delete('brands',['id'=>$id]);
+    $brand = $this->db->where('id',$id)->get('brands')->row();
+    if(!empty($brand)){
+        $image_path = './uploads/brand/'.$brand->image;
+        if(file_exists($image_path)){
+            unlink($image_path);
+        }
     }
+    $this->db->where('id',$id);
+    $this->db->delete('brands');
+    }
+
 }
 ?>

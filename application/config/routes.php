@@ -18,3 +18,10 @@ $route['brand/delete/(:any)']['GET'] = 'BrandController/delete/$1';
 $route['brand/store']['POST'] = 'BrandController/store';
 $route['brand/edit/(:any)']['GET'] = 'BrandController/edit/$1';
 $route['brand/update/(:any)']['POST'] = 'BrandController/update/$1';
+// Categories
+$route['category/create']['GET'] = 'CategoryController/create';
+$route['category/list']['GET'] = 'CategoryController/index';
+$route['category/delete/(:any)']['GET'] = 'CategoryController/delete/$1';
+$route['category/store']['POST'] = 'CategoryController/store';
+$route['category/edit/(:any)']['GET'] = 'CategoryController/edit/$1';
+$route['category/update/(:any)']['POST'] = 'CategoryController/update/$1';
