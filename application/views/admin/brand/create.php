@@ -43,7 +43,10 @@
                         <option value="0">Inactive</option>
                     </select>
             </div>
-            <button type="submit" class="btn btn-primary mt-2">Add</button>
+            <div>
+                <button type="submit" class="btn btn-primary mt-2">Add</button>
+                <a href="<?php echo base_url('brand/list');?>" class="btn btn-primary mt-2">Cancel</a>
+            </div>
         </form>
     </div>
     </div>
