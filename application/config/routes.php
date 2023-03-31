@@ -1,9 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$route['default_controller'] = 'Home';
+$route['default_controller'] = 'HomeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+//home
+$route['category-home/(:any)']['GET'] = 'HomeController/category/$1';
+$route['brand-home/(:any)']['GET'] = 'HomeController/brand/$1';
+$route['product-home/(:any)']['GET'] = 'HomeController/product/$1';
+$route['cart-home']['GET'] = 'HomeController/cart/$1';
+$route['login-home']['GET'] = 'HomeController/login/$1';
 
 // login
 $route['login']['GET'] = 'LoginController/index';

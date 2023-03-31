@@ -43,8 +43,8 @@
                     <td><?php echo $pro->cate_title;?></td>
                     <td><?php echo $pro->bra_title;?></td>
                     <td><?php echo $pro->quantity;?></td>
-                    <td><?php echo $pro->price;?></td>
-                    <td><?php echo $pro->price_discount;?></td>
+                    <td><?php echo number_format($pro->price,0,',','.');?> vnd</td>
+                    <td><?php echo number_format($pro->price_discount,0,',','.');?> vnd</td>
                     <td>
                         <img src="<?php echo base_url('uploads/product/'.$pro->image)?>" width="150" height="150" alt="image">
                     </td>
